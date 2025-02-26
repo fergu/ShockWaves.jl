@@ -92,6 +92,34 @@ function PressureRatio( nsw::NormalShockWave, γ::T, M₁::T ) where { T <: Abst
 end
 
 """
+    MachNumberFromPressureRatio( nsw::NormalShockWave, γ::T, P₂P₁::T ) where { T <: AbstractFloat }
+
+Computes the Mach number of a moving shock wave from the pressure ratio
+
+# Arguments
+    nsw: A NormalShockWave() type
+    γ: The ratio of specific heats of the gas the shock wave is propagating into
+    P₂P₁: The pressure ratio across the shock wave, must be greater than 1.0
+
+# Returns
+    A value of type T representing the Mach number of the shock wave
+
+# Equation
+    The equation for the velocity of a moving shock wave is given by inverting Eq. 3.57
+          M = √( (P₂/P₁ - 1) * (γ+1)/(2γ) + 1 )
+    where
+        ⋅ M is the Mach number
+        ⋅ P₁ is the pressure before the shock wave
+        ⋅ P₂ is the pressure after the shock wave
+        ⋅ γ is the ratio of specific heats of the gas the shock is propagating in to
+
+    The Mach number returned from this function is then this value divided by a₁
+"""
+function MachNumberFromPressureRatio( nsw::NormalShockWave, γ::T, P₂P₁::T ) where { T <: AbstractFloat }
+    return sqrt( (P₂P₁ - 1.0) * ( γ + 1.0 ) / (2.0*γ) + 1.0 )
+end
+
+"""
     TemperatureRatio( nsw::NormalShockWave, γ::T, M₁::T ) where { T <: AbstractFloat }
 
 Computes the temperature ratio, T₂/T₁, across a normal shock wave, where state 1 is before the shock and state 2 is after the shock.
@@ -124,4 +152,4 @@ function TemperatureRatio( nsw::NormalShockWave, γ::T, M₁::T ) where { T <: A
     return PressureRatio( nsw, γ, M₁ ) / DensityRatio( nsw, γ, M₁ )
 end
 
-export NormalShockWave, PostShockMachNumber, DensityRatio, PressureRatio, TemperatureRatio
+export NormalShockWave, PostShockMachNumber, DensityRatio, PressureRatio, MachNumberFromPressureRatio, TemperatureRatio
