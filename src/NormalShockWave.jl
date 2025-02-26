@@ -1,7 +1,4 @@
 # These are functions to compute properties across a normal shock wave
-# These relationships are taken from
-# Anderson, John D. "Modern Compressible Flow with Historical Perspective" 3rd ed. (2003) McGraw-Hill. ISBN: O-01-242443-5
-# Specifically, these equations are from chapter 3
 
 """
     NormalShockWave <: AbstractShockWave
